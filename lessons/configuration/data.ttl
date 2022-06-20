@@ -1,0 +1,134 @@
+<> a tutorial:Lesson
+
+  ; tutorial:chapter 1
+  ; dcterms:title "Configuration"
+  ; dcterms:description """
+# Configuration
+Although rdfpub heavily favors convention over configuration, every rdfpub
+site needs some minimal configuration. Every site has its own configuration
+file stored in a file at the site root named `.rdfpub`. It is a YAML file that
+contains some global settings for the site that can't be reasonably
+accommodated as a simple convention.
+
+## Settings
+
+Each of the configuration settings are listed below.
+
+### BaseURI
+Specifies the base URI that relative URI's throughout the site are resolved
+against. For instance, `/foo/bar` is a relative URI that would be resolved
+against `http://localhost` as `http://localhost/foo/bar`.
+
+It is also the value that will be used to set the server name in the site's
+Nginx (OpenResty) config.
+
+This is a required string value that must be a valid HTTP or HTTPS URL. It
+assumes no default value.
+
+Example:
+```yaml
+BaseURI: https://example.com
+```
+
+### DefaultLanguage
+Specifies the default language of the site. This value is used to specify the
+language of index files that aren't tagged with their own language, and it's
+used as the preferred language of a resource that is served by default if no
+other language can be idenfied during content negotiation.
+
+This is a required string value that must be an IETF language code, such as
+`en` for English or `es` for Spanish. It assumes no default value.
+
+Example:
+```yaml
+DefaultLanguage: en-us # United States English
+```
+
+### SPARQLEndpoint
+Specifies the path of the site's SPARQL endpoint. The path is given special
+treatment during the site build process in that it cannot have explicit RDF
+files (it serves a SPARQL service description instead) and it responds to
+SPARQL query requests.
+
+This is a required string value that defaults to '/sparql' if not specified.
+It should typically be left at its default value unless you have a very good
+reason to change it.
+
+Example:
+```yaml
+SPARQLEndpoint: '/sparql'
+```
+
+### Prefixes
+Specifies global prefixes that are made available to all RDF formats that
+support prefixes without having to declare them in each individual RDF file.
+These prefixes are a map of a prefix name to a prefix URI. Note that you can
+specify relative URI's as a prefix which will be resolved against your base
+URI.
+
+This value is optional although it is recommended to set a few common prefixes
+that can make your RDF files and SPARQL queries more concise.
+
+Example:
+```yaml
+Prefixes:
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  relative: /foo/bar/ # resolves to something like http://example.com/foo/bar/
+```
+
+### ExcludeFiles
+Specifies file patterns that are to be excluded from the site build. This is
+useful to exclude certain files, such as Markdown files, that are useful as
+site metadata but aren't meant to be published to the web. This value is a
+list of regular expression patterns that match a file path (including the
+file name).
+
+This value is optional.
+
+Example:
+```yaml
+ExcludeFiles:
+  - '\.md$'
+  - /documentation/
+  - LICENSE
+```
+
+### IncludeFiles
+Specifies file patterns that are to be explicitly included in the site build.
+This is especially useful for 'dot files' -- files and directories that start
+with a '.' -- which are normally excluded from a site build by default. This
+value is a list of regular expression patterns that match a file path
+(including the file name).
+
+This value is optional.
+
+Example:
+```yaml
+IncludeFiles:
+  - '\.gitignore$'
+  - '\.bashrc'
+```
+
+### CleanOutputDirectory
+Specifies whether or not the output directory for the site should be deleted
+before a build. Setting this value to `true` is potentially dangerous as it
+will delete any output directory that it's able to delete which can cause
+accidental data loss if it's pointed at the wrong directory.
+
+This value defaults to `false` and is safer to leave at its default value.
+It's mostly intended for local testing of the site init process when fast
+testing cycles are wanted.
+
+Example:
+```yaml
+CleanOutputDirectory: false
+```
+
+## Example configuration file
+A great example of a configuration file can be found in [the tutorial site's
+own .rdfpub file](/.rdfpub). The file has values for all possible settings and
+comments that explain each of the settings in detail.
+"""
+  ; tutorial:nextLesson </lessons/rdf-resources>
+.

@@ -1,0 +1,97 @@
+<> a tutorial:Lesson
+
+  ; tutorial:chapter 7
+  ; dcterms:title "Building, Running, and Deploying"
+  ; dcterms:description """
+# Building, Running, and Deploying
+Once you've finished the authoring of your data, templates, and other files,
+it's time to package up your site for delivery.
+
+## Building your site
+rdfpub sites are built and run via [Docker](https://www.docker.com), a
+technology that creates portable, self-contained, executable virtual
+environments for apps. Docker generally recommends installing
+[Docker Desktop](https://www.docker.com/products/docker-desktop/) as a means of
+using Docker, but there are other options such as
+[Docker Engine](https://docs.docker.com/engine/install/). It is assumed that
+you have some basic knowledge of Docker and how to use it, or the ability to
+follow along with installation and build instructions.
+
+assuming that you have a functional Docker CLI, you can build your site like
+so:
+
+```sh
+docker run \\
+  -v /var/run/docker.sock:/var/run/docker.sock \\
+  -v /path/to/your/site/directory:/rdfpub/input:ro \\
+  ghcr.io/rdfpub/generator \\
+  -t rdfpub/example
+```
+
+To explain each line of the above:
+
+- `docker run` runs a container which is how the rdfpub site generator operates
+- `-v /var/run/docker.sock:/var/run/docker.sock` mounts the host Docker socket
+  in the container which is needed because the site generator itself uses
+  Docker to build a Docker image of your site
+- `-v /path/to/your/site/directory:/rdfpub/input:ro` mounts a host directory
+  inside the container; in this case, your site directory is mapped to the
+  `/rdfpub/input` directory inside the container which is where the site
+  generator builds from; and the `ro` flag to mount it as read-only for
+  extra safety
+- `ghcr.io/rdfpub/generator` is the rdfpub site generator Docker image which is
+  hosted at the
+  [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
+- `-t rdfpub/example` specifies how the image should be tagged, plus any other
+  parameters to `docker buildx build`; you should supply your own image tag
+  here, like `my-org/people-site` or such
+
+If everything went well, you should see output from the build process as it
+scans your site files and begins assembling everything. It will report any
+errors that it encounters as it builds your site.
+
+### Example
+If you want to try building a working site, this tutorial site serves as a
+working example. Assuming you have a working installation of Docker on your
+local machine in addition to [git](https://git-scm.com/), you should be able to
+run the following verbatim on the command line to build the tutorial site:
+
+```sh
+git clone https://github.com/rdfpub/tutorial-site
+docker run \\
+  -v /var/run/docker.sock:/var/run/docker.sock \\
+  -v ./tutorial-site:/rdfpub/input:ro \\
+  ghcr.io/rdfpub/generator \\
+  -t rdfpub/tutorial-site
+```
+
+You should see the output of the build process as it assembles the tutorial
+site. Once it's finished, you should be able to run the tutorial site from your
+local machine as explained in the next section.
+
+## Running your site
+Once your site image is built, you can run it from the command line using
+`docker run`. Continuing the tutorial site example, you can run it like so:
+
+```sh
+docker run -p 80:80 rdfpub/tutorial-site
+```
+
+The `-p 80:80` runs the container with port 80 (HTTP) inside the container
+bound to your local machine's port 80 which allows you to access the site
+using a web browser. You should be able to visit <http://localhost/> if
+everything went according to plan.
+
+## Deploying your site
+To deploy your site, you'll need to leverage a service that allows you to run
+Docker in a web-facing environment. All of the available services and the
+various details of how to route web traffic to your live site is beyond the
+scope of this tutorial, but here are a few major services that can run your
+Docker containers:
+
+- [Amazon ECS](https://aws.amazon.com/ecs/)
+- [Google Cloud Run](https://cloud.google.com/run/)
+- [Heroku](https://www.heroku.com/deploy-with-docker)
+"""
+  # No next lesson, this is the last lesson in the tutorial!
+.

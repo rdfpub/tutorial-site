@@ -1,0 +1,9 @@
+{
+  "singleQuote": false,
+  "insert_final_newline": true,
+  "max_line_length": 80,
+  "indent_size": 2,
+  "indent_style": "space",
+  "bracketSpacing": true,
+  "end_of_line": "lf"
+}

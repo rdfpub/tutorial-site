@@ -1,0 +1,7 @@
+SELECT $url $name $chapter
+WHERE {
+  $url a tutorial:Lesson
+  ; dcterms:title $name
+  ; tutorial:chapter $chapter
+}
+ORDER BY $chapter

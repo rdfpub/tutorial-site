@@ -1,0 +1,88 @@
+<> a tutorial:Lesson
+
+  ; tutorial:chapter 3
+  ; dcterms:title "SPARQL Queries"
+  ; dcterms:description """
+# SPARQL
+SPARQL is the standard query language used to extract information from RDF
+data. In rdfpub, SPARQL queries are used to extract information about your
+resources for use in Handlebars templates.
+
+## Creating SPARQL queries
+A SPARQL query is created for each `.sparql` file in your site directory. The
+'name' part of the file (the file name minus the `.sparql` extension) is used
+to reference the results of the query in Handlebars templates.
+
+## Query inheritance
+When an rdfpub site is built, SPARQL queries are recursively copied down from
+its own directory to all subdirectories. This allows you to write a generic
+SPARQL query that all 'child' resources can use without having to duplicate
+your queries for every resource that needs them.
+
+## Generic queries
+In order to make queries generic, rdfpub will run your query against every
+resource that inherits it with two special variables:
+
+- `$resource` - the resource that the query is being executed for
+- `$language` - the current language that is currently being queried for
+  (explained in greater detail in [the i18n lesson](/lessons/i18n))
+
+With these two variables, you can write queries that can apply to any resource
+that they're run for. For instance, let's say that you want to write a SPARQL
+query that extracts a name and description for a person. Such a query might
+look like this:
+
+```sparql
+SELECT $name $description
+WHERE {
+  GRAPH $resource {
+    $resource a foaf:Person
+    ; foaf:name $name
+    ; dcterms:description $description
+  }
+}
+```
+
+If you define this query as `person.sparql` in a directory `/person`, then
+every resource in a subdirectory will receive this query with its own values
+injected into it. So `/person/Alice` and `/person/Bob` would have their own
+set of results for this query based on their individual URL's and RDF data.
+
+A good example of such a query is
+[the `lesson.sparql` query](https://github.com/rdfpub/tree/main/lessons/lesson.sparql)
+for this tutorial site. Note how `$resource` is used to extract information
+about each lesson that the query gets passed down to.
+
+## Supported SPARQL query types
+As of this writing, only SPARQL tuple queries are supported, that is, queries
+that return SPARQL results created from a `SELECT` query. All of `ASK`,
+`CONSTRUCT`, and `DESCRIBE` are intended to be supported in the future. For
+now, `SELECT` queries should suffice for almost all practical purposes.
+
+## SPARQL endpoint
+The rdfpub site generator creates a
+[SPARQL endpoint](https://www.w3.org/TR/sparql11-protocol/) for every site that
+it generates. This endpoint can be used to make arbitrary SPARQL queries over
+your data. This can be useful for anyone looking to examine or analyze your
+data. It also allows others to federate their own SPARQL queries to your site
+by way of the `SERVICE` SPARQL keyword, thus connecting datasets across the
+web.
+
+As is common convention, an rdfpub site's SPARQL endpoint is served from the
+`/sparql` URL by default. It is a
+[SPARQL 1.1 compliant endpoint](https://www.w3.org/TR/sparql11-protocol/)
+except that it does not support SPARQL update operations as rdfpub sites are
+static-ish read-only sites. It also serves
+[SPARQL 1.1 service description](https://www.w3.org/TR/sparql11-service-description/)
+data which describes the SPARQL endpoint and the features/data it supports.
+
+Lastly, you can publish an HTML page for your SPARQL endpoint by putting an
+`index.handlebars` file in your SPARQL endpoint directory. Index templates are
+explained in [the next lesson](/lessons/handlebars-templates).
+
+If you want to see a live query in action, you can try it for yourself with
+[this query to fetch lessons](http://localhost/sparql?query=SELECT%20%24url%20%24name%20WHERE%20%7B%20GRAPH%20%24url%20%7B%20%24url%20a%20%3Chttp%3A%2F%2Flocalhost%2Fvocab%23Lesson%3E%20%3B%20%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2Ftitle%3E%20%24name%20%7D%20%7D)
+from this tutorial site's SPARQL endpoint.
+"""
+  ; tutorial:nextLesson </lessons/handlebars-templates>
+.

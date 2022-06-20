@@ -1,0 +1,12 @@
+<title>{{#if lesson}}{{lesson.name}} - {{/if}}The rdfpub Tutorial Site</title>
+<link rel="stylesheet" type="text/css" href="/static/simple.css" />
+
+<header>
+  <h1>The rdfpub Tutorial Site</h1>
+  <nav>
+    <a rel="home" href="/">Home</a>
+    {{#each lessons}}
+      <a href="{{url}}">{{name}}</a>
+    {{/each}}
+  </nav>
+</header>

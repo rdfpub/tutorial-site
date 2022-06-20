@@ -1,0 +1,14 @@
+<#Lesson> a owl:Class
+  ; dcterms:title "Lesson"
+  ; dcterms:description "A lesson within the [rdfpub tutorial site](https://github.com/rdfpub/tutorial-site)"
+.
+
+<#chapter> a rdf:Property
+  ; dcterms:title "Chapter"
+  ; dcterms:description "A chapter number of a lesson"
+.
+
+<#nextLesson> a rdf:Property
+  ; dcterms:title "Next Lesson"
+  ; dcterms:description "The lesson that logically follows the subject lesson"
+.

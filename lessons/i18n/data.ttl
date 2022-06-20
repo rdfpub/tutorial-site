@@ -1,0 +1,72 @@
+<> a tutorial:Lesson
+
+  ; tutorial:chapter 5
+  ; dcterms:title "i18n"
+  ; dcterms:description """
+# i18n
+Internationalization, commonly abbreviated as _i18n_, is the practice of
+adapting a website or software to multiple languages. rdfpub supports i18n
+out of the box, evidenced partially by the `DefaultLanguage` configuration
+setting, but also via _language tags_ that can be specified for index files.
+rdfpub uses the `Accept-Language` HTTP header as well as a `lang` cookie to
+negotiate the most appropriate language for each user.
+
+## Language negotiation
+When a resource URL is accessed, the server receives information from the
+client about what languages are acceptable to the user, and the server uses
+this information to serve the most appropriate language possible for the given
+URL. In rdfpub, this process is entirely transparent to both the author of an
+rdfpub site and users who are browsing the site. As a site author, you simply
+need to specify a language for each of your index files and your site will
+automatically be configured to select the best available language for each
+request.
+
+## Language tags
+To leverage language negotiation, your index files must be tagged with a
+_language tag_. A language tag is specified as part of the index file's file
+name using an `@` symbol followed by the appropriate IETF language code. For
+instance, if you have three index files, one written in English, one written in
+Spanish, and one written in Turkish, you would name your index files like so:
+
+- `index@en.handlebars`
+- `index@es.handlebars`
+- `index@tr.handlebars`
+
+Your site will then choose the most preferred index file based on the available
+languages. If there is no overlap between the languages that the browser
+requests and the languages that the server supports, then the server will
+select the default language that you specify as the `DefaultLanguage` in your
+`.rdfpub` configuration file. The default language is also applied to every
+index file that doesn't have a language tag, so for instance you can have a
+file named `index.handlebars` with `DefaultLanguage: se` in your `.rdfpub`
+file, then internally during the site build, the file will be rendered as
+`index@se.handlebars`. This simplifies sites that only support the default
+language.
+
+## The `lang` cookie
+In many cases, the `Accept-Language` header that gets sent automatically by web
+browsers will be sufficient for language negotiation, but not always. There are
+many situations in which a user may want to select a different language:
+
+- What if a user wants to see a page in a different language than they usually
+  prefer?
+- What if you want to send someone a link to a page in a specific language?
+- What if the browser doesn't reflect the user's actual language, such as a
+  shared computer in a public library?
+
+These situations are not uncommon, and for reasons like these, it is widely
+recommended that it be possible to manually select a language. rdfpub supports
+this via language tags on resource URL's. If you want to fetch a resource in a
+language that the resource supports, simply tack and `@` symbol and the
+language code to the end of its URL, just like the language tag on an index
+file. When you visit such a URL, the server sends a `lang` cookie with the
+selected language code, such as `lang=en`, then redirects back to the main
+resource. This `lang` cookie then takes precedence over all other languages.
+
+As an example, you can [visit this page @en-us](./i18n@en-us) then check your
+site cookies afterwards to see your `lang=en-us` cookie. This isn't the
+greatest example as of this writing because the tutorial site only supports
+en-us, but at least you can see the mechanism in action in your browser.
+"""
+  ; tutorial:nextLesson </lessons/static-files>
+.

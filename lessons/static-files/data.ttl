@@ -1,0 +1,28 @@
+<> a tutorial:Lesson
+
+  ; tutorial:chapter 6
+  ; dcterms:title "Static Files"
+  ; dcterms:description """
+# Static files
+Static files are simple files that rdfpub serves exactly as they are. Any file
+that isn't an RDF, SPARQL, or Handlebars file gets copied to the output
+directory as a static file which can be accessed via its URL the way that you'd
+expect.
+
+The site configuration attempts to send a `Content-Type` header that is
+appropriate for common file types according to
+[its list of MIME types](https://github.com/rdfpub/generator/blob/main/init/src/main/resources/types.nginx.conf)
+which covers a good majority of common file types served from the web. Any file
+type that isn't listed gets served as plain text (`text/plain` MIME type).
+
+## Caveats
+Static files are very simplistic and they do not enjoy the same benefits of
+content and language negotiation that resources do. If you need to support
+static files for alternate languages or file formats, you'll need to provide
+each alternate as a separate file. And as of this writing, static files are not
+automatically compressed during the site build for more efficient delivery the
+way resources are, so large static files that can benefit from compression
+(zip, gzip, 7zip, etc.) should be compressed in your site source directory.
+"""
+  ; tutorial:nextLesson </lessons/build-run-deploy>
+.

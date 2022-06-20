@@ -1,0 +1,18 @@
+SELECT $name $content $chapter $nexturl $nextname $nextchapter
+WHERE {
+  GRAPH $resource {
+    $resource dcterms:title $name ;
+      dcterms:description $content ;
+      tutorial:chapter $chapter
+    .
+  }
+
+  OPTIONAL {
+    $resource tutorial:nextLesson $nexturl .
+    GRAPH $nexturl {
+      $nexturl dcterms:title $nextname ;
+        tutorial:chapter $nextchapter
+      .
+    }
+  }
+}

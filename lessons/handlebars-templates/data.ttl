@@ -1,0 +1,238 @@
+<> a tutorial:Lesson
+
+  ; tutorial:chapter 4
+  ; dcterms:title "Handlebars Templates"
+  ; dcterms:description """
+# Handlebars
+[Handlebars](https://handlebarsjs.com/) is a template system that rdfpub uses
+to generate HTML pages. Template files that you create are filled out with the
+results of your SPARQL queries and rendered as HTML. It is expected that you
+know how to write HTML and that you understand how Handlebars operates in order
+to create functioning templates.
+
+## About index files
+A file named `index.handlebars` is known as an _index file_. A resource that
+has an index file will serve HTML rendered from its index file. For example,
+this web page is generated from an `index.handlebars` file in the
+`/lessons/handlebars-templates` directory of this site's source.
+
+## About partial templates
+It is often the case that many resources will have similar or identical layouts
+which can be tedious to repeat throughout many index files. To make repeated
+templates easier to read, write, and maintain, rdfpub makes use of a Handlebars
+feature known as _partials_.
+
+[Handlebars partials](https://handlebarsjs.com/guide/partials.html) are
+templates that can be called from and included in other templates. They present
+a means of building templates that include common template components that
+would otherwise require that you copy/paste the parts that are shared between
+multiple templates. Duplicating common code is difficult to maintain and prone
+to error; partials solve this problem very gracefully.
+
+In rdfpub, any `.handlebars` file that has a name other than `index` will get
+registered as a partial template that other templates can include. For example,
+[the `lesson.handlebars` file](https://github.com/rdfpub/blob/main/lessons/lesson.handlebars)
+for this tutorial site is registered as a partial named `lesson`. This partial
+then gets called in each of the individual lesson index templates as
+`{{>lesson}}`.
+
+As you might have guessed, partial templates are inherited by subdirectories in
+the same was as SPARQL query files. That is, partial templates are recursively
+copied down from its own directory to all subdirectories during the site build
+process.
+
+## SPARQL query results in Handlebars
+In [the previous lesson](/lessons/sparql-queries), it was explained that SPARQL
+queries are executed against every resource they apply to, and that the name of
+each SPARQL query is used to reference its results in Handlebars templates. The
+resulting data object that gets passed into a Handlebars template is indexed by
+each query name. For example, like so:
+
+```json
+{
+  "person": { ... },
+  "friends": { ... }
+}
+```
+
+And the value mapped to each name is the JSON SPARQL query results returned
+from being executed for the current resource.
+
+## SPARQL query results shortcuts
+The default format of a
+[JSON SPARQL query results](https://www.w3.org/TR/sparql11-results-json/)
+object is a little verbose and unwieldy. For example, if you wanted to
+reference a `name` variable from your `person` query, it might look like this:
+
+```handlebars
+<p>This person's name is {{person.results.bindings[0].name.value}}.</p>
+```
+
+This is terribly long-winded which makes it harder to understand as well as
+makes it more likely that you'll make some kind of human error while typing it
+all out. It also makes your templates less readable.
+
+To ease this burden, rdfpub adds a few convenient shortcuts to your query
+results that make your templates easier to both read and write. Each shortcut
+is explained below.
+
+### Top-level variable values
+In many cases, your queries will return exactly one result which contains
+information about a single resource. For instance, each lesson in this tutorial
+is rendered from
+[a `lesson` query](https://github.com/rdfpub/blob/main/lessons/lesson.sparql)
+that extracts the name, content, chapter number, and next lesson from each
+lesson. In
+[the `lesson` template](https://github.com/rdfpub/blob/main/lessons/lesson.handlebars),
+the results of this query are used to render each lesson as HTML.
+
+So for this common case, it would be nice to be able to access the single
+result of the query without having to drill all the way down into the SPARQL
+results object. rdfpub enables this by mapping each variable to the top-level
+query result object to its value in the first query result binding.
+
+For the `lesson` query, that means that instead of this:
+
+```handlebars
+<header>
+  <h1>Chapter {{lesson.results.bindings[0].chapter.value}} - {{lesson.results.bindings[0].name.value}}</h1>
+</header>
+```
+
+We can instead do this:
+
+```handlebars
+<header>
+  <h1>Chapter {{lesson.chapter}} - {{lesson.name}}</h1>
+</header>
+```
+
+This second example is much more concise.
+
+### Top-level results iteration
+There are cases where your query might return a number of results that you need
+to render as a list or such. For example,
+[the `lessons` query](https://github.com/rdfpub/blob/main/lessons.sparql) gets
+a list of all lessons in chapter order so that they can be rendered in a
+consistent order as links at the top of each page.
+
+It would be nice to loop through a query's results without having to dive too
+deeply into the query results object. rdfpub enables this by making each query
+iterable by a Handlebars `#each` block helper at the top level. It also binds
+each `value` of a variable binding to the variable binding object itself.
+
+So instead of a verbose iteration like this:
+
+```handlebars
+<ol>
+  {{#each lessons.results.bindings}}
+    <li><a href="{{url.value}}">{{name.value}}</a></li>
+  {{/each}}
+</ol>
+```
+
+We can instead do this:
+
+```handlebars
+<ol>
+  {{#each lessons}}
+    <li><a href="{{url}}">{{name}}</a></li>
+  {{/each}}
+</ol>
+```
+
+This makes iteration much more simple and sensible.
+
+### Checking if a query has results
+Sometimes you may want to render a certain part of the page only if a
+particular query actually has results. With a raw JSON query results object,
+you could check the bindings array like so:
+
+```handlebars
+{{#if friends.results.bindings}}
+  <h2>Friends</h2>
+  <ul>
+    {{#each friends}}
+      <li>{{name}}</li>
+    {{/each}}
+  </ul>
+{{/if}}
+```
+
+rdfpub makes this kind of check more concise at the top level which allows you
+to check for query results like this instead:
+
+```handlebars
+{{#if friends}}
+  <h2>Friends</h2>
+  <ul>
+    {{#each friends}}
+      <li>{{name}}</li>
+    {{/each}}
+  </ul>
+{{/if}}
+```
+
+In this example, if the `friends` query has no results, then the `#if` check
+will evaluate to `false` and skip rendering the "Friends" section.
+
+## Helpers
+The functionality of Handlebars can be extended via _helpers_ which can perform
+processing on information passed into a Handlebars template. rdfpub defines a
+small handful of useful helpers that you can leverage for your site. In the
+future, it will be possible to register your own helpers, but only the built-in
+helpers described below are currently available.
+
+### any
+The `any` helper is used in an `#if` condition to check if any single condition
+of multiple conditions are true. It is effectively a logical OR between
+multiple conditions.
+
+You can use the `any` helper like so:
+
+```handlebars
+{{#if (any friends family)}}
+<p>{{!-- render any available friend or family relationships}}</p>
+{{/if}}
+```
+
+### all
+The `all` helper is used in an `#if` condition to check that **all** provided
+conditions are true. It is effectively a logical AND between multiple
+conditions.
+
+You can use the `all` helper like so:
+
+```handlebars
+{{#if (all person.firstname person.lastname)}}
+<p>Person has both a first name and a last name</p>
+{{/if}}
+```
+
+### markdown
+
+The `markdown` helper renders its [Markdown](https://www.markdownguide.org/)
+input as HTML. This can be very useful for embedding rich descriptions of
+resources in your RDF data that can be converted to HTML for display on your
+web pages.
+
+This tutorial site uses markdown embedded in RDF for most of its content. For
+example,
+[the `lesson` template](https://github.com/rdfpub/blob/main/lessons/lesson.handlebars)
+renders its main content like so:
+
+```
+<main>
+  {{{markdown lesson.content}}}
+</main>
+```
+
+Note the use of triple curly braces, a Handlebars syntax that preserves
+characters that are used in HTML. Without them, the Handlebars processor would
+escape the resulting HTML which would not display nicely in a web browser.
+
+Markdown rendering is provided by
+[markdown-it](https://github.com/markdown-it/markdown-it).
+"""
+  ; tutorial:nextLesson </lessons/i18n>
+.

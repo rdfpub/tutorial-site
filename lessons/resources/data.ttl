@@ -1,0 +1,71 @@
+<> a tutorial:Lesson
+
+  ; tutorial:chapter 2
+  ; dcterms:title "Resources"
+  ; dcterms:description """
+# Resources
+Resources are the fundamental building blocks of an rdfpub site. Resources are
+identifiable concepts, like people or things or web pages or abstract ideas,
+that are identified by a URI (or a URL in the case of rdfpub and the World Wide
+Web). Anything in the universe can be treated as a resource; it's part of what
+makes RDF so powerful!
+
+## How rdfpub resources are created
+Resources in an rdfpub site are generated from any subdirectory in a site's
+directory that has either of RDF data or an `index.handlebars` file, or both
+RDF data and an `index.handlebars` file for resources that should have RDF data
+and HTML representations that can be browsed on the web. Each component of a
+resource is explained below.
+
+### URL
+A resource's URL is generated from its directory path; for instance, putting a
+resource in a directory `/foo/bar` would be combined with the site's base URI
+(as described in [the previous lesson](/lessons/configuration)) to form a URL
+like `https://example.com/foo/bar`.
+
+### RDF
+[RDF](https://www.w3.org/TR/rdf11-primer/) is a first-class citizen in rdfpub.
+What makes it so special?
+
+- It is the data that describes everything about your resources
+- It is used as the basis for your site's content
+- It can be linked to other RDF data sets to express relationships between
+  resources
+- It can be queried to extract useful information and analysis from resources
+
+All RDF files in a resource's directory are combined into an RDF graph, and
+that RDF becomes part of the resource such that the resource can return its RDF
+via HTTP request and can be queried via the site's SPARQL endpoint (explained
+in [the next lesson](/lessons/sparql-queries)). A resource's RDF can also be
+queried and injected into Handlebars templates to generate HTML pages
+(explained in [a later lesson](/lessons/handlebars-templates)).
+
+While you can create resources that don't have RDF — for which there are
+perfectly valid use cases — it is expected that RDF will fuel most of your
+site's content. Ignoring the value of RDF misses the point of an rdfpub site,
+at which point you should ask yourself if a different website generator might
+better suit your needs.
+
+### index.handlebars
+The presence of an `index.handlebars` file indicates that a resource will serve
+HTML pages that a web browser can view and navigate. The details of how this
+template file is rendered are explained in
+[the Handlebars lesson](/lessons/handlebars-templates).
+
+## Supported RDF file formats
+rdfpub supports the most popular RDF formats but not all of them, and not even
+all of the formats that [RDF4J](https://www.rdf4j.org) supports. All of the
+following file extensions are associated with a specific RDF format and are
+supported by rdfpub:
+
+- `.ttl` - [Turtle](https://www.w3.org/TR/turtle/)
+- `.rdf` - [RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/)
+- `.jsonld` - [JSON-LD](https://www.w3.org/TR/json-ld/)
+- `.nt` or `.ntriples` - [N-Triples](https://www.w3.org/TR/n-triples/)
+
+Every file with one of these file extensions is parsed according to its
+associated RDF format and added to the resource associated with the file's
+parent directory.
+  """
+    ; tutorial:nextLesson </lessons/sparql-queries>
+  .

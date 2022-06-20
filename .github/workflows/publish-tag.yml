@@ -1,0 +1,40 @@
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+        with:
+          path: site-files
+
+      - name: Trim git tag for image tag
+        id: tag_trimmed
+        shell: bash
+        env:
+          TAG: ${{ github.ref_name }}
+        run: echo "::set-output name=semvertag::${TAG:1}"
+
+      - name: Generate and push site image
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ghcr.io/rdfpub/generator:2.0.0
+          options: -v ${{ github.workspace }}/site-files:/rdfpub/input:ro
+          run: >
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+            && /rdfpub/entrypoint.sh
+            -t ghcr.io/rdfpub/tutorial-site:${{ steps.tag_trimmed.outputs.semvertag }}
+            -t ghcr.io/rdfpub/tutorial-site:latest
+            && docker push -a ghcr.io/rdfpub/tutorial-site
+
+      - name: Create release for new version
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd site-files
+          gh release create ${{ github.ref_name }}
