@@ -43,8 +43,6 @@ docker run                                     \
 docker run -p 80:80 rdfpub/tutorial-site
 ```
 
-[build/run/deploy lesson](/lessons/build-run-deploy).
-
 ## Thanks!
 
 A big thanks to all of the developers of the projects that rdfpub depends
