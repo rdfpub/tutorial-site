@@ -47,7 +47,7 @@ docker run -p 80:80 rdfpub/tutorial-site
 
 A big thanks to all of the developers of the projects that rdfpub depends
 on, including but not limited to those who helped develop
-[RDF4J](https://www.rdf4j.org"), [Handlebars](https://handlebarsjs.com),
+[RDF4J](https://www.rdf4j.org), [Handlebars](https://handlebarsjs.com),
 [OpenResty](https://openresty.org),
 [markdown-it](https://github.com/markdown-it/markdown-it), and
 [SimpleCSS](https://www.simplecss.org). Projects like rdfpub
