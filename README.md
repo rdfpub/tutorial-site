@@ -19,7 +19,7 @@ The easiest way to run this site is to run a pre-built Docker image of the
 site like so (for which you will need [Docker](https://www.docker.com)):
 
 ```bash
-docker run -p 80:80 rdfpub/tutorial-site
+docker run -p 80:80 ghcr.io/rdfpub/tutorial-site
 ```
 
 If you're looking to get hands-on with rdfpub, there are alternate instructions
