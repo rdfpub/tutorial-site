@@ -22,8 +22,27 @@ site like so (for which you will need [Docker](https://www.docker.com)):
 docker run -p 80:80 ghcr.io/rdfpub/tutorial-site
 ```
 
-If you're looking to get hands-on with rdfpub, there are alternate instructions
-for how to run this site from source in the
+If the image runs successfully, then you should be able to visit the tutorial
+site in your browser at <http://localhost/>.
+
+If you're looking to get more hands-on with rdfpub, you can download the
+tutorial site's code and build it yourself like so:
+
+```bash
+# Clone the tutorial site repo
+git clone https://github.com/rdfpub/tutorial-site
+
+# Generate a Docker image of the tutorial site
+docker run                                     \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v `pwd`/tutorial-site:/rdfpub/input:ro      \
+  ghcr.io/rdfpub/generator                     \
+  -t rdfpub/tutorial-site
+
+# Run the tutorial site
+docker run -p 80:80 rdfpub/tutorial-site
+```
+
 [build/run/deploy lesson](/lessons/build-run-deploy).
 
 ## Thanks!

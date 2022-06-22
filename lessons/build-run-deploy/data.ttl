@@ -58,10 +58,10 @@ run the following verbatim on the command line to build the tutorial site:
 
 ```sh
 git clone https://github.com/rdfpub/tutorial-site
-docker run \\
+docker run                                     \\
   -v /var/run/docker.sock:/var/run/docker.sock \\
-  -v ./tutorial-site:/rdfpub/input:ro \\
-  ghcr.io/rdfpub/generator \\
+  -v `pwd`/tutorial-site:/rdfpub/input:ro      \\
+  ghcr.io/rdfpub/generator                     \\
   -t rdfpub/tutorial-site
 ```
 
