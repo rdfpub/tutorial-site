@@ -19,7 +19,7 @@ The easiest way to run this site is to run a pre-built Docker image of the
 site like so (for which you will need [Docker](https://www.docker.com)):
 
 ```bash
-docker run -p 80:80 ghcr.io/rdfpub/tutorial-site
+docker run -p 80:8081 ghcr.io/rdfpub/tutorial-site
 ```
 
 If the image runs successfully, then you should be able to visit the tutorial
@@ -40,7 +40,7 @@ docker run                                     \
   -t rdfpub/tutorial-site
 
 # Run the tutorial site
-docker run -p 80:80 rdfpub/tutorial-site
+docker run -p 80:8081 rdfpub/tutorial-site
 ```
 
 ## Thanks!
