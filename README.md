@@ -19,7 +19,7 @@ The easiest way to run this site is to run a pre-built Docker image of the
 site like so (for which you will need [Docker](https://www.docker.com)):
 
 ```bash
-docker run -p 80:80 ghcr.io/rdfpub/tutorial-site
+docker run -p 80:8081 ghcr.io/rdfpub/tutorial-site
 ```
 
 If the image runs successfully, then you should be able to visit the tutorial
@@ -36,11 +36,11 @@ git clone https://github.com/rdfpub/tutorial-site
 docker run                                     \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v `pwd`/tutorial-site:/rdfpub/input:ro      \
-  ghcr.io/rdfpub/generator                     \
+  ghcr.io/rdfpub/generator:2.1.0               \
   -t rdfpub/tutorial-site
 
 # Run the tutorial site
-docker run -p 80:80 rdfpub/tutorial-site
+docker run -p 80:8081 rdfpub/tutorial-site
 ```
 
 ## Thanks!
