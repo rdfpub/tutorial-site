@@ -20,8 +20,8 @@ resource is explained below.
 ### URL
 A resource's URL is generated from its directory path; for instance, putting a
 resource in a directory `/foo/bar` would be combined with the site's base URI
-(as described in [the previous lesson](/lessons/configuration)) to form a URL
-like `https://example.com/foo/bar`.
+(as described in [the previous lesson](/tutorial/lessons/configuration)) to
+form a URL like `https://example.com/foo/bar`.
 
 ### RDF
 [RDF](https://www.w3.org/TR/rdf11-primer/) is a first-class citizen in rdfpub.
@@ -36,9 +36,9 @@ What makes it so special?
 All RDF files in a resource's directory are combined into an RDF graph, and
 that RDF becomes part of the resource such that the resource can return its RDF
 via HTTP request and can be queried via the site's SPARQL endpoint (explained
-in [the next lesson](/lessons/sparql-queries)). A resource's RDF can also be
-queried and injected into Handlebars templates to generate HTML pages
-(explained in [a later lesson](/lessons/handlebars-templates)).
+in [the next lesson](/tutorial/lessons/sparql-queries)). A resource's RDF can
+also be queried and injected into Handlebars templates to generate HTML pages
+(explained in [a later lesson](/tutorial/lessons/handlebars-templates)).
 
 While you can create resources that don't have RDF — for which there are
 perfectly valid use cases — it is expected that RDF will fuel most of your
@@ -50,7 +50,7 @@ better suit your needs.
 The presence of an `index.handlebars` file indicates that a resource will serve
 HTML pages that a web browser can view and navigate. The details of how this
 template file is rendered are explained in
-[the Handlebars lesson](/lessons/handlebars-templates).
+[the Handlebars lesson](/tutorial/lessons/handlebars-templates).
 
 ## Supported RDF file formats
 rdfpub supports the most popular RDF formats but not all of them, and not even
@@ -67,5 +67,5 @@ Every file with one of these file extensions is parsed according to its
 associated RDF format and added to the resource associated with the file's
 parent directory.
   """
-    ; tutorial:nextLesson </lessons/sparql-queries>
+    ; tutorial:nextLesson </tutorial/lessons/sparql-queries>
   .

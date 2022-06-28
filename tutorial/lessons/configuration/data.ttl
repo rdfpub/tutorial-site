@@ -51,8 +51,6 @@ files (it serves a SPARQL service description instead) and it responds to
 SPARQL query requests.
 
 This is a required string value that defaults to '/sparql' if not specified.
-It should typically be left at its default value unless you have a very good
-reason to change it.
 
 Example:
 ```yaml
@@ -127,8 +125,9 @@ CleanOutputDirectory: false
 
 ## Example configuration file
 A great example of a configuration file can be found in [the tutorial site's
-own .rdfpub file](/.rdfpub). The file has values for all possible settings and
-comments that explain each of the settings in detail.
+own .rdfpub file](https://github.com/rdfpub/tutorial-site/blob/main/.rdfpub).
+The file has values for all possible settings and comments that explain each
+of the settings in detail.
 """
-  ; tutorial:nextLesson </lessons/rdf-resources>
+  ; tutorial:nextLesson </tutorial/lessons/rdf-resources>
 .

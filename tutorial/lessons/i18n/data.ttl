@@ -68,5 +68,5 @@ site cookies afterwards to see your `lang=en-us` cookie. This isn't the
 greatest example as of this writing because the tutorial site only supports
 en-us, but at least you can see the mechanism in action in your browser.
 """
-  ; tutorial:nextLesson </lessons/static-files>
+  ; tutorial:nextLesson </tutorial/lessons/static-files>
 .
