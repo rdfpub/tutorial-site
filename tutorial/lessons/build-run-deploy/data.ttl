@@ -24,7 +24,7 @@ so:
 docker run \\
   -v /var/run/docker.sock:/var/run/docker.sock \\
   -v /path/to/your/site/directory:/rdfpub/input:ro \\
-  ghcr.io/rdfpub/generator:2.1.0 \\
+  ghcr.io/rdfpub/generator:2.2.0 \\
   -t rdfpub/example
 ```
 
@@ -39,7 +39,7 @@ To explain each line of the above:
   `/rdfpub/input` directory inside the container which is where the site
   generator builds from; and the `ro` flag to mount it as read-only for
   extra safety
-- `ghcr.io/rdfpub/generator:2.1.0` is the rdfpub site generator Docker image
+- `ghcr.io/rdfpub/generator:2.2.0` is the rdfpub site generator Docker image
   which is hosted at the
   [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
 - `-t rdfpub/example` specifies how the image should be tagged, plus any other
@@ -61,7 +61,7 @@ git clone https://github.com/rdfpub/tutorial-site
 docker run                                     \\
   -v /var/run/docker.sock:/var/run/docker.sock \\
   -v `pwd`/tutorial-site:/rdfpub/input:ro      \\
-  ghcr.io/rdfpub/generator:2.1.0               \\
+  ghcr.io/rdfpub/generator:2.2.0               \\
   -t rdfpub/tutorial-site
 ```
 
@@ -79,10 +79,10 @@ docker run -p 80:8081 rdfpub/tutorial-site
 
 The `-p 80:8081` runs the container with port 8081 (HTTP) inside the container
 bound to your local machine's port 80 which allows you to access the site
-using a web browser. You should be able to visit <http://localhost/> if
-everything went according to plan. Note that binding to ports below 1024
-requires root privileges on Linux, so you might need `sudo` to successfully
-bind the server to your local port 80.
+using a web browser. You should be able to visit
+<http://localhost/tutorial> if everything went according to plan. Note
+that binding to ports below 1024 requires root privileges on Linux, so you
+might need `sudo` to successfully bind the server to your local port 80.
 
 ## Deploying your site
 To deploy your site, you'll need to leverage a service that allows you to run

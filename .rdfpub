@@ -4,13 +4,13 @@
 ### BaseURI ###
 # Specifies the base URI that relative URI's throughout the site are resolved
 # against. For instance, /foo/bar is a relative URI that would be resolved
-# against http://localhost as http://localhost/foo/bar.
+# against http://example.com as http://example.com/foo/bar.
 #
 # It is also the value that will be used to set the server name in the site's
 # Nginx (OpenResty) config.
 #
 # This is a required string value that must be a valid HTTP or HTTPS URL.
-BaseURI: http://localhost
+BaseURI: https://rdf.pub
 
 ### DefaultLanguage ###
 # Specifies the default language of the site. This value is used to specify the
@@ -29,9 +29,7 @@ DefaultLanguage: en-us
 # SPARQL query requests.
 #
 # This is a required string value that defaults to '/sparql' if not specified.
-# It should typically be left at its default value unless you have a very good
-# reason to change it.
-SPARQLEndpoint: "/sparql"
+SPARQLEndpoint: "/tutorial/sparql"
 
 ### Prefixes ###
 # Specifies global prefixes that are made available to all RDF formats that
@@ -42,7 +40,7 @@ Prefixes:
   rdfs: http://www.w3.org/2000/01/rdf-schema#
   dcterms: http://purl.org/dc/terms/
   owl: http://www.w3.org/2002/07/owl#
-  tutorial: /vocab#
+  tutorial: /tutorial/vocab#
 
 ### ExcludeFiles ###
 # Specifies file patterns that are to be excluded from the site build. This is
@@ -60,8 +58,7 @@ ExcludeFiles:
 # with a '.' -- which are normally excluded from a site build by default. This
 # value is a list of regular expression patterns that match a file path
 # (including the file name).
-IncludeFiles:
-  - '\.rdfpub$'
+#IncludeFiles: the tutorial site doesn't use this value
 
 ### CleanOutputDirectory ###
 # Specifies whether or not the output directory for the site should be deleted

@@ -14,7 +14,7 @@ to create functioning templates.
 A file named `index.handlebars` is known as an _index file_. A resource that
 has an index file will serve HTML rendered from its index file. For example,
 this web page is generated from an `index.handlebars` file in the
-`/lessons/handlebars-templates` directory of this site's source.
+`/tutorial/lessons/handlebars-templates` directory of this site's source.
 
 ## About partial templates
 It is often the case that many resources will have similar or identical layouts
@@ -31,7 +31,7 @@ to error; partials solve this problem very gracefully.
 
 In rdfpub, any `.handlebars` file that has a name other than `index` will get
 registered as a partial template that other templates can include. For example,
-[the `lesson.handlebars` file](https://github.com/rdfpub/blob/main/lessons/lesson.handlebars)
+[the `lesson.handlebars` file](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons/lesson.handlebars)
 for this tutorial site is registered as a partial named `lesson`. This partial
 then gets called in each of the individual lesson index templates as
 `{{>lesson}}`.
@@ -42,11 +42,11 @@ copied down from its own directory to all subdirectories during the site build
 process.
 
 ## SPARQL query results in Handlebars
-In [the previous lesson](/lessons/sparql-queries), it was explained that SPARQL
-queries are executed against every resource they apply to, and that the name of
-each SPARQL query is used to reference its results in Handlebars templates. The
-resulting data object that gets passed into a Handlebars template is indexed by
-each query name. For example, like so:
+In [the previous lesson](/tutorial/lessons/sparql-queries), it was explained
+that SPARQL queries are executed against every resource they apply to, and that
+the name of each SPARQL query is used to reference its results in Handlebars
+templates. The resulting data object that gets passed into a Handlebars
+template is indexed by each query name. For example, like so:
 
 ```json
 {
@@ -80,10 +80,10 @@ is explained below.
 In many cases, your queries will return exactly one result which contains
 information about a single resource. For instance, each lesson in this tutorial
 is rendered from
-[a `lesson` query](https://github.com/rdfpub/blob/main/lessons/lesson.sparql)
+[a `lesson` query](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons/lesson.sparql)
 that extracts the name, content, chapter number, and next lesson from each
 lesson. In
-[the `lesson` template](https://github.com/rdfpub/blob/main/lessons/lesson.handlebars),
+[the `lesson` template](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons/lesson.handlebars),
 the results of this query are used to render each lesson as HTML.
 
 So for this common case, it would be nice to be able to access the single
@@ -112,8 +112,8 @@ This second example is much more concise.
 ### Top-level results iteration
 There are cases where your query might return a number of results that you need
 to render as a list or such. For example,
-[the `lessons` query](https://github.com/rdfpub/blob/main/lessons.sparql) gets
-a list of all lessons in chapter order so that they can be rendered in a
+[the `lessons` query](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons.sparql)
+gets a list of all lessons in chapter order so that they can be rendered in a
 consistent order as links at the top of each page.
 
 It would be nice to loop through a query's results without having to dive too
@@ -209,8 +209,25 @@ You can use the `all` helper like so:
 {{/if}}
 ```
 
-### markdown
+### equals
+The `equals` helper tests a number of values (usually two) for equality. This
+can be useful for conditionally rendering parts of a page based on comparisons
+between values.
 
+For example, you could have a template that has different sections based on a
+person's primary language returned in a query result, like so:
+
+```handlebars
+{{#if (equals person.language "en")}}
+  {{!-- English text --}}
+{{/if}}
+
+{{#if (equals person.language "es")}}
+  {{!-- Spanish text --}}
+{{/if}}
+```
+
+### markdown
 The `markdown` helper renders its [Markdown](https://www.markdownguide.org/)
 input as HTML. This can be very useful for embedding rich descriptions of
 resources in your RDF data that can be converted to HTML for display on your
@@ -218,7 +235,7 @@ web pages.
 
 This tutorial site uses markdown embedded in RDF for most of its content. For
 example,
-[the `lesson` template](https://github.com/rdfpub/blob/main/lessons/lesson.handlebars)
+[the `lesson` template](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons/lesson.handlebars)
 renders its main content like so:
 
 ```
@@ -233,6 +250,92 @@ escape the resulting HTML which would not display nicely in a web browser.
 
 Markdown rendering is provided by
 [markdown-it](https://github.com/markdown-it/markdown-it).
+
+### relative
+The use of relative URL's in HTML `link`/`a` elements can be very useful for
+site portability because a relative link will resolve against the current base
+URL which can change based on where a site is being served from. For instance,
+if your data's base URL is `http://www.foo.example` but your site is actually
+served from `http://www.bar.example`, then all of the URL's from your data that
+are linked to on your HTML pages will be wrong. The links could even break with
+a simple difference between `http://` and `https://`.
+
+The `relative` helper solves this problem by taking a URL and outputting its
+path, query, and fragment/hash. This URL segment can be used in HTML as a
+relative link to another page on the site without regards to where the site is
+actually hosted.
+
+Use of this helper can be seen in
+[the header.handlebars file](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/header.handlebars)
+of the rdfpub tutorial site itself. Note that the base URL of the site is
+`https://rdf.pub`, so if the results of
+[the lessons query](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons.sparql)
+were to simply output URL's like so...
+
+```handlebars
+{{#each lessons}}
+  <a href="{{url}}">{{name}}</a>
+{{/each}}
+```
+
+...then the links in the header would always point to the live site at
+<https://rdf.pub/tutorial>. If you run the site on your local machine and
+access it via <http://localhost/tutorial>, such as for testing or
+experimenting with changes, then the links will take you away from your local
+site.
+
+So the template uses the `relative` helper to render relative links that will
+always link to the site itself no matter where it's deployed to:
+
+```handlebars
+{{#each lessons}}
+  <a href="{{relative url}}">{{name}}</a>
+{{/each}}
+```
+
+It is generally recommended to use the `relative` helper for all URL's returned
+by queries that are expected to link exclusively to other pages on the same
+site.
+
+## Special variables
+A couple of special variables are made available as part of the data object
+passed to your Handlebars templates. These variables are each explained below.
+
+### $resource
+The `$resource` variable is the absolute URL of the current resource, resolved
+against the `BaseURI` specified in your .rdfpub configuration file. It can be
+useful for appending links in order to build links to other resources,
+especially language variants of the same resource.
+
+For instance, if you have a resource `http://example.com/foo/bar` that you
+want to link to language variants of, you could do so in a generic/reusable
+fashion like so:
+
+```handlebars
+<a href="{{relative $resource}}@es">Visit this page in Spanish</a>
+<a href="{{relative $resource}}@de">Visit this page in German</a>
+```
+
+### $language
+The `$language` variable contains the language code of the page that is
+currently being processed during site rendering. As explained in
+[the i18n lesson](/tutorial/lessons/i18n), each of your index templates can
+have an associated language, such as `en` for English or `es` for Spanish. Your
+site will have a separate page for each supported language, and you can access
+the language for each page using the `$language` variable.
+
+An example use case would be selecting different sections of a page based on
+the current language, like so:
+
+```handlebars
+{{#if (equals $language "en")}}
+  <h1>Hello!</h1>
+{{/if}}
+
+{{#if (equals $language "es")}}
+  <h1>Hola!</h1>
+{{/if}}
+```
 """
-  ; tutorial:nextLesson </lessons/i18n>
+  ; tutorial:nextLesson </tutorial/lessons/i18n>
 .
