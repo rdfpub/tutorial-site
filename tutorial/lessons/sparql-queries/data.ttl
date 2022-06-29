@@ -84,7 +84,7 @@ templates are explained in
 [the next lesson](/tutorial/lessons/handlebars-templates).
 
 If you want to see a live query in action, you can try it for yourself with
-[this query to fetch lessons](/sparql?query=SELECT%20%24url%20%24name%20WHERE%20%7B%20GRAPH%20%24url%20%7B%20%24url%20a%20%3Chttp%3A%2F%2Flocalhost%2Fvocab%23Lesson%3E%20%3B%20%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2Ftitle%3E%20%24name%20%7D%20%7D)
+[this query to fetch lessons](/tutorial/sparql?query=SELECT%20%24url%20%24name%20WHERE%20%7B%20GRAPH%20%24url%20%7B%20%24url%20a%20%3Chttps%3A%2F%2Frdf.pub%2Ftutorial%2Fvocab%23Lesson%3E%20%3B%20%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2Ftitle%3E%20%24name%20%7D%20%7D)
 from this tutorial site's SPARQL endpoint.
 """
   ; tutorial:nextLesson </tutorial/lessons/handlebars-templates>
