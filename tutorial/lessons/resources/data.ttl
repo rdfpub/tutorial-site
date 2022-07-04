@@ -24,7 +24,7 @@ resource in a directory `/foo/bar` would be combined with the site's base URI
 form a URL like `https://example.com/foo/bar`.
 
 ### RDF
-[RDF](https://www.w3.org/TR/rdf11-primer/) is a first-class citizen in rdfpub.
+[RDF](https://www.w3.org/2001/sw/wiki/RDF) is a first-class citizen in rdfpub.
 What makes it so special?
 
 - It is the data that describes everything about your resources
