@@ -1,6 +1,6 @@
 <> a tutorial:Lesson
 
-  ; tutorial:chapter 7
+  ; tutorial:chapter 8
   ; dcterms:title "Building, Running, and Deploying"
   ; dcterms:description """
 # Building, Running, and Deploying
@@ -24,7 +24,7 @@ so:
 docker run \\
   -v /var/run/docker.sock:/var/run/docker.sock \\
   -v /path/to/your/site/directory:/rdfpub/input:ro \\
-  ghcr.io/rdfpub/generator:2.2.0 \\
+  ghcr.io/rdfpub/generator:2.2.1 \\
   -t rdfpub/example
 ```
 
@@ -39,7 +39,7 @@ To explain each line of the above:
   `/rdfpub/input` directory inside the container which is where the site
   generator builds from; and the `ro` flag to mount it as read-only for
   extra safety
-- `ghcr.io/rdfpub/generator:2.2.0` is the rdfpub site generator Docker image
+- `ghcr.io/rdfpub/generator:2.2.1` is the rdfpub site generator Docker image
   which is hosted at the
   [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
 - `-t rdfpub/example` specifies how the image should be tagged, plus any other
@@ -61,7 +61,7 @@ git clone https://github.com/rdfpub/tutorial-site
 docker run                                     \\
   -v /var/run/docker.sock:/var/run/docker.sock \\
   -v `pwd`/tutorial-site:/rdfpub/input:ro      \\
-  ghcr.io/rdfpub/generator:2.2.0               \\
+  ghcr.io/rdfpub/generator:2.2.1               \\
   -t rdfpub/tutorial-site
 ```
 

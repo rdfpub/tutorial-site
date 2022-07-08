@@ -1,6 +1,6 @@
 <> a tutorial:Lesson
 
-  ; tutorial:chapter 5
+  ; tutorial:chapter 6
   ; dcterms:title "i18n"
   ; dcterms:description """
 # i18n

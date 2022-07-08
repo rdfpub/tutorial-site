@@ -1,6 +1,6 @@
 <> a tutorial:Lesson
 
-  ; tutorial:chapter 1
+  ; tutorial:chapter 2
   ; dcterms:title "Configuration"
   ; dcterms:description """
 # Configuration
@@ -9,6 +9,11 @@ site needs some minimal configuration. Every site has its own configuration
 file stored in a file at the site root named `.rdfpub`. It is a YAML file that
 contains some global settings for the site that can't be reasonably
 accommodated as a simple convention.
+
+It might help to follow along with
+[the tutorial site's own .rdfpub file](https://github.com/rdfpub/tutorial-site/blob/main/.rdfpub)
+as you learn about the settings below. The file has values for most settings
+and comments that explain each of the settings in detail.
 
 ## Settings
 
@@ -122,12 +127,6 @@ Example:
 ```yaml
 CleanOutputDirectory: false
 ```
-
-## Example configuration file
-A great example of a configuration file can be found in [the tutorial site's
-own .rdfpub file](https://github.com/rdfpub/tutorial-site/blob/main/.rdfpub).
-The file has values for all possible settings and comments that explain each
-of the settings in detail.
 """
   ; tutorial:nextLesson </tutorial/lessons/rdf-resources>
 .

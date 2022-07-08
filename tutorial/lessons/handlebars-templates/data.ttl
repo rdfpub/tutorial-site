@@ -1,6 +1,6 @@
 <> a tutorial:Lesson
 
-  ; tutorial:chapter 4
+  ; tutorial:chapter 5
   ; dcterms:title "Handlebars Templates"
   ; dcterms:description """
 # Handlebars

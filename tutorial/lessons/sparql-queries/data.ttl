@@ -1,12 +1,12 @@
 <> a tutorial:Lesson
 
-  ; tutorial:chapter 3
+  ; tutorial:chapter 4
   ; dcterms:title "SPARQL Queries"
   ; dcterms:description """
 # SPARQL
-SPARQL is the standard query language used to extract information from RDF
-data. In rdfpub, SPARQL queries are used to extract information about your
-resources for use in Handlebars templates.
+[SPARQL](https://www.w3.org/TR/sparql11-query/) is the standard query language
+used to extract information from RDF data. In rdfpub, SPARQL queries are used
+to extract information about your resources for use in Handlebars templates.
 
 ## Creating SPARQL queries
 A SPARQL query is created for each `.sparql` file in your site directory. The
@@ -18,6 +18,10 @@ When an rdfpub site is built, SPARQL queries are recursively copied down from
 its own directory to all subdirectories. This allows you to write a generic
 SPARQL query that all 'child' resources can use without having to duplicate
 your queries for every resource that needs them.
+
+For example,
+[the `lesson` query](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons/lesson.sparql)
+of the tutorial site is passed down to each of the individual tutorial lessons.
 
 ## Generic queries
 In order to make queries generic, rdfpub will run your query against every
@@ -49,10 +53,12 @@ every resource in a subdirectory will receive this query with its own values
 injected into it. So `/person/Alice` and `/person/Bob` would have their own
 set of results for this query based on their individual URL's and RDF data.
 
-A good example of such a query is
-[the `lesson.sparql` query](https://github.com/rdfpub/tree/main/tutorial/lessons/lesson.sparql)
-for this tutorial site. Note how `$resource` is used to extract information
-about each lesson that the query gets passed down to.
+Again using
+[the `lesson` query](https://github.com/rdfpub/tutorial-site/tree/main/tutorial/lessons/lesson.sparql)
+as an example, not only does it get passed down to each tutorial lesson, but
+it also get run against each lesson with its `$resource` variable bound to each
+lesson's URL and its `$language` variable bound to each language that the
+lesson supports.
 
 ## Supported SPARQL query types
 As of this writing, only SPARQL tuple queries are supported, that is, queries
@@ -70,10 +76,9 @@ by way of the `SERVICE` SPARQL keyword, thus connecting datasets across the
 web.
 
 As is common convention, an rdfpub site's SPARQL endpoint is served from the
-`/sparql` URL by default. It is a
-[SPARQL 1.1 compliant endpoint](https://www.w3.org/TR/sparql11-protocol/)
-except that it does not support SPARQL update operations as rdfpub sites are
-static-ish read-only sites. It also serves
+`/sparql` URL by default. It is a SPARQL 1.1 compliant endpoint except that it
+does not support SPARQL update operations as rdfpub sites are read-only. A
+site's SPARQL endpoint also serves
 [SPARQL 1.1 service description](https://www.w3.org/TR/sparql11-service-description/)
 data which describes the SPARQL endpoint and the features/data it supports.
 

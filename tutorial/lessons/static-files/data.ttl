@@ -1,6 +1,6 @@
 <> a tutorial:Lesson
 
-  ; tutorial:chapter 6
+  ; tutorial:chapter 7
   ; dcterms:title "Static Files"
   ; dcterms:description """
 # Static files
