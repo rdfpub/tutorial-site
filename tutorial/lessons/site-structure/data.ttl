@@ -1,0 +1,78 @@
+<> a tutorial:Lesson
+
+  ; tutorial:chapter 1
+  ; dcterms:title "Site Structure"
+  ; dcterms:description """
+# Site Structure
+
+To create an rdfpub site, you will need to create files that define your site's
+content, a file for its settings, and names for its various components. How you
+name and organize your files affects how your site is rendered. The rules for
+how an rdfpub site is generated from its source is a matter of _convention over
+configuration_, a principle that favors implicit processing rules over complex
+configuration files.
+
+Although most rdfpub processing rules are implicit, there is some minimal
+configuration necessary for an rdfpub site. Configuration is explained more
+below and in [the next lesson](/tutorial/lessons/configuration).
+
+## Directory structure
+
+The URL's of an rdfpub site are generated according to the site's source
+directory sturcture. For instance, this page of the tutorial has the URL path
+`/tutorial/lessons/site-structure` which is generated from a matching directory
+path in its source. The root directory of your site corresponds to the root
+path, `/`.
+
+Every URL generated in this fashion is commonly referred to as a _resource_
+which can also have data and templates associated with it. Resources are
+explained further in [the Resources lesson](/tutorial/lessons/resources).
+
+## Data
+
+Your site content is driven by data files which, in the case of an rdfpub site,
+are [RDF](https://www.w3.org/2001/sw/wiki/RDF) files. Any RDF file in a
+resource's directory will be associated with that resource.
+
+RDF and supported RDF files are explained further in
+[the Resources lesson](/tutorial/lessons/resources).
+
+## Queries
+
+In order to extract specific bits of information from your RDF data, you will
+need [SPARQL](https://www.w3.org/TR/sparql11-query/) queries. Each of your
+SPARQL queries are executed against each of the resources that they're
+associated with.
+
+You can learn more about SPARQL queries and how rdfpub processes them in
+[the SPARQL lesson](/tutorial/lessons/sparql-queries).
+
+## Templates
+
+In order to render your resources as HTML for display on the web, you must
+create templates that define how your data is converted to HTML. rdfpub uses
+[Handlebars](https://handlebarsjs.com) as its template engine.
+
+Template processing is covered in greater detail in
+[the Handlebars lesson](/tutorial/lessons/handlebars-templates).
+
+## Static files
+
+Many websites make use of files that are served exactly as they are, such as
+images or CSS. Any site file that isn't RDF, SPARQL, or a Handlebars template
+is copied to the generated site as a static file.
+
+You can read more about static files in
+[the static file lesson](/tutorial/lessons/static-files).
+
+## Configuration
+
+There are some settings that cannot be expressed through ordinary files and
+directories. This handful of settings is defined in a special file at the root
+directory of your site called `.rdfpub`.
+
+The [next lesson](/tutorial/lessons/configuration) thoroughly explains rdfpub
+site configuration.
+"""
+  ; tutorial:nextLesson </tutorial/lessons/configuration>
+.

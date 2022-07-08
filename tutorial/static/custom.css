@@ -1,0 +1,18 @@
+header h1 {
+  position: relative;
+  line-height: 128px;
+  background: #409cd0;
+  color: #fff;
+  border: 1px solid #456;
+  border-radius: 8px;
+  box-shadow: 8px 8px 8px #abc;
+  text-shadow: 4px 4px 4px #456;
+}
+
+header h1::before {
+  position: absolute;
+  content: url('/tutorial/static/rdfpub_logo_transparent.png');
+  height: 128px;
+  width: 128px;
+  left: 16px;
+}
