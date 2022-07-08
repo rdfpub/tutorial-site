@@ -1,6 +1,6 @@
 <> a tutorial:Lesson
 
-  ; tutorial:chapter 2
+  ; tutorial:chapter 3
   ; dcterms:title "Resources"
   ; dcterms:description """
 # Resources

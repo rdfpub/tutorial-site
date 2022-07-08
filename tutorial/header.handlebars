@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <title>{{#if lesson}}{{lesson.name}} - {{/if}}The rdfpub Tutorial Site</title>
 <link rel="stylesheet" type="text/css" href="/tutorial/static/simple.css" />
+<link rel="stylesheet" type="text/css" href="/tutorial/static/custom.css" />
 
 <header>
   <h1>The rdfpub Tutorial Site</h1>
   <nav>
-    <a rel="home" href="/tutorial">Home</a>
+    <a rel="home" href="/tutorial"><b>Home</b></a>
+    <a href="/tutorial/sparql"><b>SPARQL Endpoint</b></a>
+    <br>
     {{#each lessons}}
       <a href="{{relative url}}">{{name}}</a>
     {{/each}}
