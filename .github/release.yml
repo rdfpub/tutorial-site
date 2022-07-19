@@ -3,9 +3,12 @@ changelog:
     authors:
       - octocat
   categories:
-    - title: New Features
+    - title: Enhancements
       labels:
-        - new feature
+        - enhancement
+    - title: New Content
+      labels:
+        - new content
     - title: Bug Fixes
       labels:
         - bug fix

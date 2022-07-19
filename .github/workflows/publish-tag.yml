@@ -22,7 +22,7 @@ jobs:
       - name: Generate and push site image
         uses: addnab/docker-run-action@v3
         with:
-          image: ghcr.io/rdfpub/generator:2.2.1
+          image: ghcr.io/rdfpub/generator:2.3.0
           options: -v ${{ github.workspace }}/site-files:/rdfpub/input:ro
           run: >
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin

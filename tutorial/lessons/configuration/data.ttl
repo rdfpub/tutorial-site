@@ -4,6 +4,7 @@
   ; dcterms:title "Configuration"
   ; dcterms:description """
 # Configuration
+
 Although rdfpub heavily favors convention over configuration, every rdfpub
 site needs some minimal configuration. Every site has its own configuration
 file stored in a file at the site root named `.rdfpub`. It is a YAML file that
@@ -11,15 +12,20 @@ contains some global settings for the site that can't be reasonably
 accommodated as a simple convention.
 
 It might help to follow along with
-[the tutorial site's own .rdfpub file](https://github.com/rdfpub/tutorial-site/blob/main/.rdfpub)
+[the tutorial site's own .rdfpub file](https://github.com/rdfpub/tutorial-site/blob/v1.4.0/.rdfpub)
 as you learn about the settings below. The file has values for most settings
 and comments that explain each of the settings in detail.
+
+And while the long list of options may look intimidating, only the first two
+options are required; rdfpub supplies default values for all other options that
+will work perfectly well for many rdfpub sites.
 
 ## Settings
 
 Each of the configuration settings are listed below.
 
 ### BaseURI
+
 Specifies the base URI that relative URI's throughout the site are resolved
 against. For instance, `/foo/bar` is a relative URI that would be resolved
 against `http://localhost` as `http://localhost/foo/bar`.
@@ -36,6 +42,7 @@ BaseURI: https://example.com
 ```
 
 ### DefaultLanguage
+
 Specifies the default language of the site. This value is used to specify the
 language of index files that aren't tagged with their own language, and it's
 used as the preferred language of a resource that is served by default if no
@@ -50,6 +57,7 @@ DefaultLanguage: en-us # United States English
 ```
 
 ### SPARQLEndpoint
+
 Specifies the path of the site's SPARQL endpoint. The path is given special
 treatment during the site build process in that it cannot have explicit RDF
 files (it serves a SPARQL service description instead) and it responds to
@@ -63,6 +71,7 @@ SPARQLEndpoint: '/sparql'
 ```
 
 ### Prefixes
+
 Specifies global prefixes that are made available to all RDF formats that
 support prefixes without having to declare them in each individual RDF file.
 These prefixes are a map of a prefix name to a prefix URI. Note that you can
@@ -80,7 +89,50 @@ Prefixes:
   relative: /foo/bar/ # resolves to something like http://example.com/foo/bar/
 ```
 
+### FileTypes
+
+Specifies additional associations between file extensions and MIME types. While
+humans are typically used to file extensions for identifying file types, such
+as .gif for GIF images or .txt for plain text files, web browsers rely on MIME
+types to decide how to handle files served from websites. rdfpub includes a
+good majority of file types that are common on the web by default, but you can
+specify additional types or override existing types using this optional
+configuration option.
+
+The value is a map of file extensions to MIME types.
+
+Example:
+```yaml
+FileTypes:
+  xcf: image/x-xcf
+  css: text/css;charset=UTF-8
+```
+
+### CompressFiles
+
+Specifies file patterns for static files that are to be compressed in the site
+output. Compression can significantly reduce the size of many kinds of files,
+especially text-based files such as CSS files, which in turn will greatly speed
+up your site's delivery. Compression is generally not recommended for images or
+binary files as these types of files do not compress well and may process more
+slowly with the overhead of compression.
+
+All files matching any of the specified patterns will be compressed with both
+gzip and brotli compression algorithms and will support content negotiation for
+either encoding. All resource RDF and HTML files are automatically compressed
+and do not need to be listed.
+
+Example:
+```yaml
+CompressFiles:
+  - '\.css$'
+  - '\.txt$'
+  - '\.md$'
+  - LICENSE
+```
+
 ### ExcludeFiles
+
 Specifies file patterns that are to be excluded from the site build. This is
 useful to exclude certain files, such as Markdown files, that are useful as
 site metadata but aren't meant to be published to the web. This value is a
@@ -98,6 +150,7 @@ ExcludeFiles:
 ```
 
 ### IncludeFiles
+
 Specifies file patterns that are to be explicitly included in the site build.
 This is especially useful for 'dot files' -- files and directories that start
 with a '.' -- which are normally excluded from a site build by default. This
@@ -114,6 +167,7 @@ IncludeFiles:
 ```
 
 ### CleanOutputDirectory
+
 Specifies whether or not the output directory for the site should be deleted
 before a build. Setting this value to `true` is potentially dangerous as it
 will delete any output directory that it's able to delete which can cause
