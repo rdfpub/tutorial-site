@@ -29,7 +29,7 @@ git clone https://github.com/rdfpub/tutorial-site
 docker run                                     \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v `pwd`/tutorial-site:/rdfpub/input:ro      \
-  ghcr.io/rdfpub/generator:2.2.0               \
+  ghcr.io/rdfpub/generator:2.3.0               \
   -t rdfpub/tutorial-site
 
 # Run the tutorial site

@@ -42,6 +42,33 @@ Prefixes:
   owl: http://www.w3.org/2002/07/owl#
   tutorial: /tutorial/vocab#
 
+### FileTypes ###
+# Specifies additional associations between file extensions and MIME types.
+# While humans are typically used to file extensions for identifying file
+# types, such as .gif for GIF images or .txt for plain text files, web browsers
+# rely on MIME types to decide how to handle files served from websites. rdfpub
+# includes a good majority of file types that are common on the web by default,
+# but you can specify additional types or override existing types using this
+# optional configuration option.
+#
+# The value is a map of file extensions to MIME types.
+#FileTypes: the tutorial site doesn't use this value
+
+### CompressFiles ###
+# Specifies file patterns for static files that are to be compressed in the
+# site output. Compression can significantly reduce the size of many kinds of
+# files, especially text-based files such as CSS files, which in turn will
+# greatly speed up your site's delivery. Compression is generally not
+# recommended for images or binary files as these types of files do not
+# compress well and may process more slowly with the overhead of compression.
+#
+# All files matching any of the specified patterns will be compressed
+# with both gzip and brotli compression algorithms and will support content
+# negotiation for either encoding. All resource RDF and HTML files are
+# automatically compressed and do not need to be listed.
+CompressFiles:
+  - '\.css$'
+
 ### ExcludeFiles ###
 # Specifies file patterns that are to be excluded from the site build. This is
 # useful to exclude certain files, such as Markdown files, that are useful as

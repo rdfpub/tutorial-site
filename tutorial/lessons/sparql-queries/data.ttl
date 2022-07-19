@@ -20,7 +20,7 @@ SPARQL query that all 'child' resources can use without having to duplicate
 your queries for every resource that needs them.
 
 For example,
-[the `lesson` query](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons/lesson.sparql)
+[the `lesson` query](https://github.com/rdfpub/tutorial-site/blob/v1.4.0/tutorial/lessons/lesson.sparql)
 of the tutorial site is passed down to each of the individual tutorial lessons.
 
 ## Generic queries
@@ -54,7 +54,7 @@ injected into it. So `/person/Alice` and `/person/Bob` would have their own
 set of results for this query based on their individual URL's and RDF data.
 
 Again using
-[the `lesson` query](https://github.com/rdfpub/tutorial-site/tree/main/tutorial/lessons/lesson.sparql)
+[the `lesson` query](https://github.com/rdfpub/tutorial-site/blob/v1.4.0/tutorial/lessons/lesson.sparql)
 as an example, not only does it get passed down to each tutorial lesson, but
 it also get run against each lesson with its `$resource` variable bound to each
 lesson's URL and its `$language` variable bound to each language that the

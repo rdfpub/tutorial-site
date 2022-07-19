@@ -4,10 +4,12 @@
   ; dcterms:title "Building, Running, and Deploying"
   ; dcterms:description """
 # Building, Running, and Deploying
+
 Once you've finished the authoring of your data, templates, and other files,
 it's time to package up your site for delivery.
 
 ## Building your site
+
 rdfpub sites are built and run via [Docker](https://www.docker.com), a
 technology that creates portable, self-contained, executable virtual
 environments for apps. Docker generally recommends installing
@@ -24,7 +26,7 @@ so:
 docker run \\
   -v /var/run/docker.sock:/var/run/docker.sock \\
   -v /path/to/your/site/directory:/rdfpub/input:ro \\
-  ghcr.io/rdfpub/generator:2.2.1 \\
+  ghcr.io/rdfpub/generator:2.3.0 \\
   -t rdfpub/example
 ```
 
@@ -39,7 +41,7 @@ To explain each line of the above:
   `/rdfpub/input` directory inside the container which is where the site
   generator builds from; and the `ro` flag to mount it as read-only for
   extra safety
-- `ghcr.io/rdfpub/generator:2.2.1` is the rdfpub site generator Docker image
+- `ghcr.io/rdfpub/generator:2.3.0` is the rdfpub site generator Docker image
   which is hosted at the
   [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
 - `-t rdfpub/example` specifies how the image should be tagged, plus any other
@@ -51,6 +53,7 @@ scans your site files and begins assembling everything. It will report any
 errors that it encounters as it builds your site.
 
 ### Example
+
 If you want to try building a working site, this tutorial site serves as a
 working example. Assuming you have a working installation of Docker on your
 local machine in addition to [git](https://git-scm.com/), you should be able to
@@ -61,7 +64,7 @@ git clone https://github.com/rdfpub/tutorial-site
 docker run                                     \\
   -v /var/run/docker.sock:/var/run/docker.sock \\
   -v `pwd`/tutorial-site:/rdfpub/input:ro      \\
-  ghcr.io/rdfpub/generator:2.2.1               \\
+  ghcr.io/rdfpub/generator:2.3.0               \\
   -t rdfpub/tutorial-site
 ```
 
@@ -85,6 +88,7 @@ that binding to ports below 1024 requires root privileges on Linux, so you
 might need `sudo` to successfully bind the server to your local port 80.
 
 ## Deploying your site
+
 To deploy your site, you'll need to leverage a service that allows you to run
 Docker in a web-facing environment. All of the available services and the
 various details of how to route web traffic to your live site is beyond the

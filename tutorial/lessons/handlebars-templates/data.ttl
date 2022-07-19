@@ -31,7 +31,7 @@ to error; partials solve this problem very gracefully.
 
 In rdfpub, any `.handlebars` file that has a name other than `index` will get
 registered as a partial template that other templates can include. For example,
-[the `lesson.handlebars` file](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons/lesson.handlebars)
+[the `lesson.handlebars` file](https://github.com/rdfpub/tutorial-site/blob/v1.4.0/tutorial/lessons/lesson.handlebars)
 for this tutorial site is registered as a partial named `lesson`. This partial
 then gets called in each of the individual lesson index templates as
 `{{>lesson}}`.
@@ -80,10 +80,10 @@ is explained below.
 In many cases, your queries will return exactly one result which contains
 information about a single resource. For instance, each lesson in this tutorial
 is rendered from
-[a `lesson` query](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons/lesson.sparql)
+[a `lesson` query](https://github.com/rdfpub/tutorial-site/blob/v1.4.0/tutorial/lessons/lesson.sparql)
 that extracts the name, content, chapter number, and next lesson from each
 lesson. In
-[the `lesson` template](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons/lesson.handlebars),
+[the `lesson` template](https://github.com/rdfpub/tutorial-site/blob/v1.4.0/tutorial/lessons/lesson.handlebars),
 the results of this query are used to render each lesson as HTML.
 
 So for this common case, it would be nice to be able to access the single
@@ -112,7 +112,7 @@ This second example is much more concise.
 ### Top-level results iteration
 There are cases where your query might return a number of results that you need
 to render as a list or such. For example,
-[the `lessons` query](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons.sparql)
+[the `lessons` query](https://github.com/rdfpub/tutorial-site/blob/v1.4.0/tutorial/lessons.sparql)
 gets a list of all lessons in chapter order so that they can be rendered in a
 consistent order as links at the top of each page.
 
@@ -235,7 +235,7 @@ web pages.
 
 This tutorial site uses markdown embedded in RDF for most of its content. For
 example,
-[the `lesson` template](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons/lesson.handlebars)
+[the `lesson` template](https://github.com/rdfpub/tutorial-site/blob/v1.4.0/tutorial/lessons/lesson.handlebars)
 renders its main content like so:
 
 ```
@@ -266,10 +266,10 @@ relative link to another page on the site without regards to where the site is
 actually hosted.
 
 Use of this helper can be seen in
-[the header.handlebars file](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/header.handlebars)
+[the header.handlebars file](https://github.com/rdfpub/tutorial-site/blob/v1.4.0/tutorial/header.handlebars)
 of the rdfpub tutorial site itself. Note that the base URL of the site is
 `https://rdf.pub`, so if the results of
-[the lessons query](https://github.com/rdfpub/tutorial-site/blob/main/tutorial/lessons.sparql)
+[the lessons query](https://github.com/rdfpub/tutorial-site/blob/v1.4.0/tutorial/lessons.sparql)
 were to simply output URL's like so...
 
 ```handlebars
